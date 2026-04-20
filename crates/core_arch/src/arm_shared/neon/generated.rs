@@ -39702,7 +39702,6 @@ pub fn vrecpsq_f32(a: float32x4_t, b: float32x4_t) -> float32x4_t {
 #[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_f16)"]
 #[inline(always)]
-#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -39723,36 +39722,8 @@ pub fn vreinterpret_f32_f16(a: float16x4_t) -> float32x2_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f32_f16(a: float16x4_t) -> float32x2_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_f16)"]
 #[inline(always)]
-#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -39773,9 +39744,8 @@ pub fn vreinterpret_s8_f16(a: float16x4_t) -> int8x8_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_f16)"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_f16)"]
 #[inline(always)]
-#[cfg(target_endian = "big")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -39792,12 +39762,646 @@ pub fn vreinterpret_s8_f16(a: float16x4_t) -> int8x8_t {
     unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
 )]
 #[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_s8_f16(a: float16x4_t) -> int8x8_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
+pub fn vreinterpret_s32_f16(a: float16x4_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_s64_f16(a: float16x4_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_u8_f16(a: float16x4_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_u32_f16(a: float16x4_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_u64_f16(a: float16x4_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_p8_f16(a: float16x4_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f32_f16(a: float16x8_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_s8_f16(a: float16x8_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_s32_f16(a: float16x8_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_s64_f16(a: float16x8_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_u8_f16(a: float16x8_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_u32_f16(a: float16x8_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_u64_f16(a: float16x8_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_p8_f16(a: float16x8_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_f32(a: float32x2_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_f32(a: float32x4_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_s8(a: int8x8_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_s8(a: int8x16_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_s32(a: int32x2_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_s32(a: int32x4_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_s64(a: int64x1_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_s64(a: int64x2_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_u8(a: uint8x8_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_u8(a: uint8x16_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_u32(a: uint32x2_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_u32(a: uint32x4_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_u64(a: uint64x1_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_u64(a: uint64x2_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_p8(a: poly8x8_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_p8(a: poly8x16_t) -> float16x8_t {
+    unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_f16)"]
@@ -39847,153 +40451,6 @@ pub fn vreinterpret_s16_f16(a: float16x4_t) -> int16x4_t {
     unsafe {
         let ret_val: int16x4_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_s32_f16(a: float16x4_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_s32_f16(a: float16x4_t) -> int32x2_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_s64_f16(a: float16x4_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_s64_f16(a: float16x4_t) -> int64x1_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_u8_f16(a: float16x4_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_u8_f16(a: float16x4_t) -> uint8x8_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -40047,153 +40504,6 @@ pub fn vreinterpret_u16_f16(a: float16x4_t) -> uint16x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_u32_f16(a: float16x4_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_u32_f16(a: float16x4_t) -> uint32x2_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_u64_f16(a: float16x4_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_u64_f16(a: float16x4_t) -> uint64x1_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_p8_f16(a: float16x4_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_p8_f16(a: float16x4_t) -> poly8x8_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_f16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -40241,110 +40551,6 @@ pub fn vreinterpret_p16_f16(a: float16x4_t) -> poly16x4_t {
     unsafe {
         let ret_val: poly16x4_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f32_f16(a: float16x8_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f32_f16(a: float16x8_t) -> float32x4_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_s8_f16(a: float16x8_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_s8_f16(a: float16x8_t) -> int8x16_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -40398,160 +40604,6 @@ pub fn vreinterpretq_s16_f16(a: float16x8_t) -> int16x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_s32_f16(a: float16x8_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_s32_f16(a: float16x8_t) -> int32x4_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_s64_f16(a: float16x8_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_s64_f16(a: float16x8_t) -> int64x2_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_u8_f16(a: float16x8_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_u8_f16(a: float16x8_t) -> uint8x16_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_f16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -40602,160 +40654,6 @@ pub fn vreinterpretq_u16_f16(a: float16x8_t) -> uint16x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_u32_f16(a: float16x8_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_u32_f16(a: float16x8_t) -> uint32x4_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_u64_f16(a: float16x8_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_u64_f16(a: float16x8_t) -> uint64x2_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_p8_f16(a: float16x8_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_p8_f16(a: float16x8_t) -> poly8x16_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_f16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -40802,207 +40700,6 @@ pub fn vreinterpretq_p16_f16(a: float16x8_t) -> poly16x8_t {
     let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
     unsafe {
         let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_f32(a: float32x2_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_f32(a: float32x2_t) -> float16x4_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_f32(a: float32x4_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_f32(a: float32x4_t) -> float16x8_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_s8(a: int8x8_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_s8(a: int8x8_t) -> float16x4_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_s8(a: int8x16_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_s8(a: int8x16_t) -> float16x8_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
     }
 }
@@ -41101,306 +40798,6 @@ pub fn vreinterpretq_f16_s16(a: int16x8_t) -> float16x8_t {
 #[cfg(not(target_arch = "arm64ec"))]
 pub fn vreinterpretq_f16_s16(a: int16x8_t) -> float16x8_t {
     let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_s32(a: int32x2_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_s32(a: int32x2_t) -> float16x4_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_s32(a: int32x4_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_s32(a: int32x4_t) -> float16x8_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_s64(a: int64x1_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_s64(a: int64x1_t) -> float16x4_t {
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_s64(a: int64x2_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_s64(a: int64x2_t) -> float16x8_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_u8(a: uint8x8_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_u8(a: uint8x8_t) -> float16x4_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_u8(a: uint8x16_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_u8(a: uint8x16_t) -> float16x8_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
     unsafe {
         let ret_val: float16x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
@@ -41507,306 +40904,6 @@ pub fn vreinterpretq_f16_u16(a: uint16x8_t) -> float16x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_u32(a: uint32x2_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_u32(a: uint32x2_t) -> float16x4_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_u32(a: uint32x4_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_u32(a: uint32x4_t) -> float16x8_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_u64(a: uint64x1_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_u64(a: uint64x1_t) -> float16x4_t {
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_u64(a: uint64x2_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_u64(a: uint64x2_t) -> float16x8_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_p8(a: poly8x8_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_p8(a: poly8x8_t) -> float16x4_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_p8(a: poly8x16_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_p8(a: poly8x16_t) -> float16x8_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -41907,441 +41004,6 @@ pub fn vreinterpretq_f16_p16(a: poly16x8_t) -> float16x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p128)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_p128(a: p128) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p128)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_p128(a: p128) -> float16x8_t {
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_p64_f16(a: float16x4_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_p64_f16(a: float16x4_t) -> poly64x1_t {
-    let a: float16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_p128_f16(a: float16x8_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_p128_f16(a: float16x8_t) -> p128 {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_p64_f16(a: float16x8_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_f16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_p64_f16(a: float16x8_t) -> poly64x2_t {
-    let a: float16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_p64(a: poly64x1_t) -> float16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpret_f16_p64(a: poly64x1_t) -> float16x4_t {
-    unsafe {
-        let ret_val: float16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_p64(a: poly64x2_t) -> float16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-#[cfg(not(target_arch = "arm64ec"))]
-pub fn vreinterpretq_f16_p64(a: poly64x2_t) -> float16x8_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p128)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_p128(a: p128) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p128)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_p128(a: p128) -> float32x4_t {
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_f32(a: float32x2_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_f32(a: float32x2_t) -> int8x8_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_f32(a: float32x2_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_f32(a: float32x2_t) -> int16x4_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_f32)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -42387,147 +41049,6 @@ pub fn vreinterpret_s32_f32(a: float32x2_t) -> int32x2_t {
     unsafe {
         let ret_val: int32x2_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_f32(a: float32x2_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_f32(a: float32x2_t) -> int64x1_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_f32(a: float32x2_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_f32(a: float32x2_t) -> uint8x8_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_f32(a: float32x2_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_f32(a: float32x2_t) -> uint16x4_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -42579,292 +41100,6 @@ pub fn vreinterpret_u32_f32(a: float32x2_t) -> uint32x2_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_f32(a: float32x2_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_f32(a: float32x2_t) -> uint64x1_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_f32(a: float32x2_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_f32(a: float32x2_t) -> poly8x8_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_f32(a: float32x2_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_f32(a: float32x2_t) -> poly16x4_t {
-    let a: float32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_f32(a: float32x4_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_f32(a: float32x4_t) -> p128 {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_f32(a: float32x4_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_f32(a: float32x4_t) -> int8x16_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_f32(a: float32x4_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_f32(a: float32x4_t) -> int16x8_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_f32)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -42910,154 +41145,6 @@ pub fn vreinterpretq_s32_f32(a: float32x4_t) -> int32x4_t {
     unsafe {
         let ret_val: int32x4_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_f32(a: float32x4_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_f32(a: float32x4_t) -> int64x2_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_f32(a: float32x4_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_f32(a: float32x4_t) -> uint8x16_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_f32(a: float32x4_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_f32(a: float32x4_t) -> uint16x8_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -43109,343 +41196,6 @@ pub fn vreinterpretq_u32_f32(a: float32x4_t) -> uint32x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_f32(a: float32x4_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_f32(a: float32x4_t) -> uint64x2_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_f32(a: float32x4_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_f32(a: float32x4_t) -> poly8x16_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_f32(a: float32x4_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_f32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_f32(a: float32x4_t) -> poly16x8_t {
-    let a: float32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_s8(a: int8x8_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_s8(a: int8x8_t) -> float32x2_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_s8(a: int8x8_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_s8(a: int8x8_t) -> int16x4_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_s8(a: int8x8_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_s8(a: int8x8_t) -> int32x2_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_s8(a: int8x8_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_s8(a: int8x8_t) -> int64x1_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -43494,147 +41244,6 @@ pub fn vreinterpret_u8_s8(a: int8x8_t) -> uint8x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_s8(a: int8x8_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_s8(a: int8x8_t) -> uint16x4_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_s8(a: int8x8_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_s8(a: int8x8_t) -> uint32x2_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_s8(a: int8x8_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_s8(a: int8x8_t) -> uint64x1_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -43680,250 +41289,6 @@ pub fn vreinterpret_p8_s8(a: int8x8_t) -> poly8x8_t {
     unsafe {
         let ret_val: poly8x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_s8(a: int8x8_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_s8(a: int8x8_t) -> poly16x4_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_s8(a: int8x16_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_s8(a: int8x16_t) -> float32x4_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_s8(a: int8x16_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_s8(a: int8x16_t) -> int16x8_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_s8(a: int8x16_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_s8(a: int8x16_t) -> int32x4_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_s8(a: int8x16_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_s8(a: int8x16_t) -> int64x2_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -43980,153 +41345,6 @@ pub fn vreinterpretq_u8_s8(a: int8x16_t) -> uint8x16_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_s8(a: int8x16_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_s8(a: int8x16_t) -> uint16x8_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_s8(a: int8x16_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_s8(a: int8x16_t) -> uint32x4_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_s8(a: int8x16_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_s8(a: int8x16_t) -> uint64x2_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -44177,292 +41395,6 @@ pub fn vreinterpretq_p8_s8(a: int8x16_t) -> poly8x16_t {
             ret_val,
             [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_s8(a: int8x16_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_s8(a: int8x16_t) -> poly16x8_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_s16(a: int16x4_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_s16(a: int16x4_t) -> float32x2_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_s16(a: int16x4_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_s16(a: int16x4_t) -> int8x8_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_s16(a: int16x4_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_s16(a: int16x4_t) -> int32x2_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_s16(a: int16x4_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_s16(a: int16x4_t) -> int64x1_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_s16(a: int16x4_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_s16(a: int16x4_t) -> uint8x8_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -44514,147 +41446,6 @@ pub fn vreinterpret_u16_s16(a: int16x4_t) -> uint16x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_s16(a: int16x4_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_s16(a: int16x4_t) -> uint32x2_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_s16(a: int16x4_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_s16(a: int16x4_t) -> uint64x1_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_s16(a: int16x4_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_s16(a: int16x4_t) -> poly8x8_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -44703,254 +41494,6 @@ pub fn vreinterpret_p16_s16(a: int16x4_t) -> poly16x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_s16(a: int16x8_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_s16(a: int16x8_t) -> float32x4_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_s16(a: int16x8_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_s16(a: int16x8_t) -> int8x16_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_s16(a: int16x8_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_s16(a: int16x8_t) -> int32x4_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_s16(a: int16x8_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_s16(a: int16x8_t) -> int64x2_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_s16(a: int16x8_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_s16(a: int16x8_t) -> uint8x16_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -44996,154 +41539,6 @@ pub fn vreinterpretq_u16_s16(a: int16x8_t) -> uint16x8_t {
     unsafe {
         let ret_val: uint16x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_s16(a: int16x8_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_s16(a: int16x8_t) -> uint32x4_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_s16(a: int16x8_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_s16(a: int16x8_t) -> uint64x2_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_s16(a: int16x8_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_s16(a: int16x8_t) -> poly8x16_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -45243,243 +41638,6 @@ pub fn vreinterpret_f32_s32(a: int32x2_t) -> float32x2_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_s32(a: int32x2_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_s32(a: int32x2_t) -> int8x8_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_s32(a: int32x2_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_s32(a: int32x2_t) -> int16x4_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_s32(a: int32x2_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_s32(a: int32x2_t) -> int64x1_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_s32(a: int32x2_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_s32(a: int32x2_t) -> uint8x8_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_s32(a: int32x2_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_s32(a: int32x2_t) -> uint16x4_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s32)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -45525,147 +41683,6 @@ pub fn vreinterpret_u32_s32(a: int32x2_t) -> uint32x2_t {
     unsafe {
         let ret_val: uint32x2_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_s32(a: int32x2_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_s32(a: int32x2_t) -> uint64x1_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_s32(a: int32x2_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_s32(a: int32x2_t) -> poly8x8_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_s32(a: int32x2_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_s32(a: int32x2_t) -> poly16x4_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -45717,254 +41734,6 @@ pub fn vreinterpretq_f32_s32(a: int32x4_t) -> float32x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_s32(a: int32x4_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_s32(a: int32x4_t) -> int8x16_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_s32(a: int32x4_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_s32(a: int32x4_t) -> int16x8_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_s32(a: int32x4_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_s32(a: int32x4_t) -> int64x2_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_s32(a: int32x4_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_s32(a: int32x4_t) -> uint8x16_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_s32(a: int32x4_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_s32(a: int32x4_t) -> uint16x8_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s32)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -46010,483 +41779,6 @@ pub fn vreinterpretq_u32_s32(a: int32x4_t) -> uint32x4_t {
     unsafe {
         let ret_val: uint32x4_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_s32(a: int32x4_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_s32(a: int32x4_t) -> uint64x2_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_s32(a: int32x4_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_s32(a: int32x4_t) -> poly8x16_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_s32(a: int32x4_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_s32(a: int32x4_t) -> poly16x8_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_s64(a: int64x1_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_s64(a: int64x1_t) -> float32x2_t {
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_s64(a: int64x1_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_s64(a: int64x1_t) -> int8x8_t {
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_s64(a: int64x1_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_s64(a: int64x1_t) -> int16x4_t {
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_s64(a: int64x1_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_s64(a: int64x1_t) -> int32x2_t {
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_s64(a: int64x1_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_s64(a: int64x1_t) -> uint8x8_t {
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_s64(a: int64x1_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_s64(a: int64x1_t) -> uint16x4_t {
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_s64(a: int64x1_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_s64(a: int64x1_t) -> uint32x2_t {
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -46511,444 +41803,6 @@ pub fn vreinterpret_u64_s64(a: int64x1_t) -> uint64x1_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_s64(a: int64x1_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_s64(a: int64x1_t) -> poly8x8_t {
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_s64(a: int64x1_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_s64(a: int64x1_t) -> poly16x4_t {
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_s64(a: int64x2_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_s64(a: int64x2_t) -> float32x4_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_s64(a: int64x2_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_s64(a: int64x2_t) -> int8x16_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_s64(a: int64x2_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_s64(a: int64x2_t) -> int16x8_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_s64(a: int64x2_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_s64(a: int64x2_t) -> int32x4_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_s64(a: int64x2_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_s64(a: int64x2_t) -> uint8x16_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_s64(a: int64x2_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_s64(a: int64x2_t) -> uint16x8_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_s64(a: int64x2_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_s64(a: int64x2_t) -> uint32x4_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s64)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -46993,154 +41847,6 @@ pub fn vreinterpretq_u64_s64(a: int64x2_t) -> uint64x2_t {
     let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
     unsafe {
         let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_s64(a: int64x2_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_s64(a: int64x2_t) -> poly8x16_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_s64(a: int64x2_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_s64(a: int64x2_t) -> poly16x8_t {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_u8(a: uint8x8_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_u8(a: uint8x8_t) -> float32x2_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [1, 0])
     }
 }
@@ -47193,288 +41899,6 @@ pub fn vreinterpret_s8_u8(a: uint8x8_t) -> int8x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_u8(a: uint8x8_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_u8(a: uint8x8_t) -> int16x4_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_u8(a: uint8x8_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_u8(a: uint8x8_t) -> int32x2_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_u8(a: uint8x8_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_u8(a: uint8x8_t) -> int64x1_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_u8(a: uint8x8_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_u8(a: uint8x8_t) -> uint16x4_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_u8(a: uint8x8_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_u8(a: uint8x8_t) -> uint32x2_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_u8(a: uint8x8_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_u8(a: uint8x8_t) -> uint64x1_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -47520,103 +41944,6 @@ pub fn vreinterpret_p8_u8(a: uint8x8_t) -> poly8x8_t {
     unsafe {
         let ret_val: poly8x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_u8(a: uint8x8_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_u8(a: uint8x8_t) -> poly16x4_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_u8(a: uint8x16_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_u8(a: uint8x16_t) -> float32x4_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -47673,300 +42000,6 @@ pub fn vreinterpretq_s8_u8(a: uint8x16_t) -> int8x16_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_u8(a: uint8x16_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_u8(a: uint8x16_t) -> int16x8_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_u8(a: uint8x16_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_u8(a: uint8x16_t) -> int32x4_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_u8(a: uint8x16_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_u8(a: uint8x16_t) -> int64x2_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_u8(a: uint8x16_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_u8(a: uint8x16_t) -> uint16x8_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_u8(a: uint8x16_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_u8(a: uint8x16_t) -> uint32x4_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_u8(a: uint8x16_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_u8(a: uint8x16_t) -> uint64x2_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -48017,151 +42050,6 @@ pub fn vreinterpretq_p8_u8(a: uint8x16_t) -> poly8x16_t {
             ret_val,
             [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_u8(a: uint8x16_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_u8(a: uint8x16_t) -> poly16x8_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_u16(a: uint16x4_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_u16(a: uint16x4_t) -> float32x2_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_u16(a: uint16x4_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_u16(a: uint16x4_t) -> int8x8_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -48213,288 +42101,6 @@ pub fn vreinterpret_s16_u16(a: uint16x4_t) -> int16x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_u16(a: uint16x4_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_u16(a: uint16x4_t) -> int32x2_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_u16(a: uint16x4_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_u16(a: uint16x4_t) -> int64x1_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_u16(a: uint16x4_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_u16(a: uint16x4_t) -> uint8x8_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_u16(a: uint16x4_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_u16(a: uint16x4_t) -> uint32x2_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_u16(a: uint16x4_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_u16(a: uint16x4_t) -> uint64x1_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_u16(a: uint16x4_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_u16(a: uint16x4_t) -> poly8x8_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -48543,106 +42149,6 @@ pub fn vreinterpret_p16_u16(a: uint16x4_t) -> poly16x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_u16(a: uint16x8_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_u16(a: uint16x8_t) -> float32x4_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_u16(a: uint16x8_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_u16(a: uint16x8_t) -> int8x16_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -48688,302 +42194,6 @@ pub fn vreinterpretq_s16_u16(a: uint16x8_t) -> int16x8_t {
     unsafe {
         let ret_val: int16x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_u16(a: uint16x8_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_u16(a: uint16x8_t) -> int32x4_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_u16(a: uint16x8_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_u16(a: uint16x8_t) -> int64x2_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_u16(a: uint16x8_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_u16(a: uint16x8_t) -> uint8x16_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_u16(a: uint16x8_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_u16(a: uint16x8_t) -> uint32x4_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_u16(a: uint16x8_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_u16(a: uint16x8_t) -> uint64x2_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_u16(a: uint16x8_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_u16(a: uint16x8_t) -> poly8x16_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -49083,102 +42293,6 @@ pub fn vreinterpret_f32_u32(a: uint32x2_t) -> float32x2_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_u32(a: uint32x2_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_u32(a: uint32x2_t) -> int8x8_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_u32(a: uint32x2_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_u32(a: uint32x2_t) -> int16x4_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u32)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -49224,288 +42338,6 @@ pub fn vreinterpret_s32_u32(a: uint32x2_t) -> int32x2_t {
     unsafe {
         let ret_val: int32x2_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_u32(a: uint32x2_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_u32(a: uint32x2_t) -> int64x1_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_u32(a: uint32x2_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_u32(a: uint32x2_t) -> uint8x8_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_u32(a: uint32x2_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_u32(a: uint32x2_t) -> uint16x4_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_u32(a: uint32x2_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_u32(a: uint32x2_t) -> uint64x1_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_u32(a: uint32x2_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_u32(a: uint32x2_t) -> poly8x8_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_u32(a: uint32x2_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_u32(a: uint32x2_t) -> poly16x4_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -49557,106 +42389,6 @@ pub fn vreinterpretq_f32_u32(a: uint32x4_t) -> float32x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_u32(a: uint32x4_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_u32(a: uint32x4_t) -> int8x16_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_u32(a: uint32x4_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_u32(a: uint32x4_t) -> int16x8_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u32)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -49702,490 +42434,6 @@ pub fn vreinterpretq_s32_u32(a: uint32x4_t) -> int32x4_t {
     unsafe {
         let ret_val: int32x4_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_u32(a: uint32x4_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_u32(a: uint32x4_t) -> int64x2_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_u32(a: uint32x4_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_u32(a: uint32x4_t) -> uint8x16_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_u32(a: uint32x4_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_u32(a: uint32x4_t) -> uint16x8_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_u32(a: uint32x4_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_u32(a: uint32x4_t) -> uint64x2_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_u32(a: uint32x4_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_u32(a: uint32x4_t) -> poly8x16_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_u32(a: uint32x4_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_u32(a: uint32x4_t) -> poly16x8_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_u64(a: uint64x1_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_u64(a: uint64x1_t) -> float32x2_t {
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_u64(a: uint64x1_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_u64(a: uint64x1_t) -> int8x8_t {
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_u64(a: uint64x1_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_u64(a: uint64x1_t) -> int16x4_t {
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_u64(a: uint64x1_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_u64(a: uint64x1_t) -> int32x2_t {
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -50210,437 +42458,6 @@ pub fn vreinterpret_s64_u64(a: uint64x1_t) -> int64x1_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_u64(a: uint64x1_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_u64(a: uint64x1_t) -> uint8x8_t {
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_u64(a: uint64x1_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_u64(a: uint64x1_t) -> uint16x4_t {
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_u64(a: uint64x1_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_u64(a: uint64x1_t) -> uint32x2_t {
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_u64(a: uint64x1_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_u64(a: uint64x1_t) -> poly8x8_t {
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_u64(a: uint64x1_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_u64(a: uint64x1_t) -> poly16x4_t {
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_u64(a: uint64x2_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_u64(a: uint64x2_t) -> float32x4_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_u64(a: uint64x2_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_u64(a: uint64x2_t) -> int8x16_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_u64(a: uint64x2_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_u64(a: uint64x2_t) -> int16x8_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_u64(a: uint64x2_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_u64(a: uint64x2_t) -> int32x4_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u64)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -50685,302 +42502,6 @@ pub fn vreinterpretq_s64_u64(a: uint64x2_t) -> int64x2_t {
     let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
     unsafe {
         let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_u64(a: uint64x2_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_u64(a: uint64x2_t) -> uint8x16_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_u64(a: uint64x2_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_u64(a: uint64x2_t) -> uint16x8_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_u64(a: uint64x2_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_u64(a: uint64x2_t) -> uint32x4_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_u64(a: uint64x2_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_u64(a: uint64x2_t) -> poly8x16_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_u64(a: uint64x2_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_u64(a: uint64x2_t) -> poly16x8_t {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_p8(a: poly8x8_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_p8(a: poly8x8_t) -> float32x2_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [1, 0])
     }
 }
@@ -51033,147 +42554,6 @@ pub fn vreinterpret_s8_p8(a: poly8x8_t) -> int8x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_p8(a: poly8x8_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_p8(a: poly8x8_t) -> int16x4_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_p8(a: poly8x8_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_p8(a: poly8x8_t) -> int32x2_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_p8(a: poly8x8_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_p8(a: poly8x8_t) -> int64x1_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -51219,244 +42599,6 @@ pub fn vreinterpret_u8_p8(a: poly8x8_t) -> uint8x8_t {
     unsafe {
         let ret_val: uint8x8_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_p8(a: poly8x8_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_p8(a: poly8x8_t) -> uint16x4_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_p8(a: poly8x8_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_p8(a: poly8x8_t) -> uint32x2_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_p8(a: poly8x8_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_p8(a: poly8x8_t) -> uint64x1_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_p8(a: poly8x8_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_p8(a: poly8x8_t) -> poly16x4_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_p8(a: poly8x16_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_p8(a: poly8x16_t) -> float32x4_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -51513,153 +42655,6 @@ pub fn vreinterpretq_s8_p8(a: poly8x16_t) -> int8x16_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_p8(a: poly8x16_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_p8(a: poly8x16_t) -> int16x8_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_p8(a: poly8x16_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_p8(a: poly8x16_t) -> int32x4_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_p8(a: poly8x16_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_p8(a: poly8x16_t) -> int64x2_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p8)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -51710,298 +42705,6 @@ pub fn vreinterpretq_u8_p8(a: poly8x16_t) -> uint8x16_t {
             ret_val,
             [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_p8(a: poly8x16_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_p8(a: poly8x16_t) -> uint16x8_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_p8(a: poly8x16_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_p8(a: poly8x16_t) -> uint32x4_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_p8(a: poly8x16_t) -> uint64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_p8(a: poly8x16_t) -> uint64x2_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_p8(a: poly8x16_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_p8(a: poly8x16_t) -> poly16x8_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_p16(a: poly16x4_t) -> float32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_f32_p16(a: poly16x4_t) -> float32x2_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_p16(a: poly16x4_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_p16(a: poly16x4_t) -> int8x8_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -52053,147 +42756,6 @@ pub fn vreinterpret_s16_p16(a: poly16x4_t) -> int16x4_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_p16(a: poly16x4_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_p16(a: poly16x4_t) -> int32x2_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_p16(a: poly16x4_t) -> int64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s64_p16(a: poly16x4_t) -> int64x1_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_p16(a: poly16x4_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_p16(a: poly16x4_t) -> uint8x8_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -52239,247 +42801,6 @@ pub fn vreinterpret_u16_p16(a: poly16x4_t) -> uint16x4_t {
     unsafe {
         let ret_val: uint16x4_t = transmute(a);
         simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_p16(a: poly16x4_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_p16(a: poly16x4_t) -> uint32x2_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_p16(a: poly16x4_t) -> uint64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u64_p16(a: poly16x4_t) -> uint64x1_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_p16(a: poly16x4_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_p16(a: poly16x4_t) -> poly8x8_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_p16(a: poly16x8_t) -> float32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_f32_p16(a: poly16x8_t) -> float32x4_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: float32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_p16(a: poly16x8_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_p16(a: poly16x8_t) -> int8x16_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
     }
 }
 #[doc = "Vector reinterpret cast operation"]
@@ -52531,154 +42852,6 @@ pub fn vreinterpretq_s16_p16(a: poly16x8_t) -> int16x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_p16(a: poly16x8_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_p16(a: poly16x8_t) -> int32x4_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_p16(a: poly16x8_t) -> int64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s64_p16(a: poly16x8_t) -> int64x2_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: int64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_p16(a: poly16x8_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_p16(a: poly16x8_t) -> uint8x16_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p16)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -52727,9 +42900,4424 @@ pub fn vreinterpretq_u16_p16(a: poly16x8_t) -> uint16x8_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p128)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_p128(a: p128) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_p64_f16(a: float16x4_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_p128_f16(a: float16x8_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_f16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_p64_f16(a: float16x8_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpret_f16_p64(a: poly64x1_t) -> float16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "stdarch_neon_fp16", since = "1.94.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vreinterpretq_f16_p64(a: poly64x2_t) -> float16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p128)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_p128(a: p128) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_f32(a: float32x2_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_f32(a: float32x2_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_f32(a: float32x2_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_f32(a: float32x2_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_f32(a: float32x2_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_f32(a: float32x2_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_f32(a: float32x2_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_f32(a: float32x2_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_f32(a: float32x4_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_f32(a: float32x4_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_f32(a: float32x4_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_f32(a: float32x4_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_f32(a: float32x4_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_f32(a: float32x4_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_f32(a: float32x4_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_f32(a: float32x4_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_f32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_f32(a: float32x4_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_s8(a: int8x8_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_s8(a: int8x8_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_s8(a: int8x8_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_s8(a: int8x8_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_s8(a: int8x8_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_s8(a: int8x8_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_s8(a: int8x8_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_s8(a: int8x8_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_s8(a: int8x8_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_s8(a: int8x16_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_s8(a: int8x16_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_s8(a: int8x16_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_s8(a: int8x16_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_s8(a: int8x16_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_s8(a: int8x16_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_s8(a: int8x16_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_s8(a: int8x16_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_s8(a: int8x16_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_s8(a: int8x16_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_s16(a: int16x4_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_s16(a: int16x4_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_s16(a: int16x4_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_s16(a: int16x4_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_s16(a: int16x4_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_s16(a: int16x4_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_s16(a: int16x4_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_s16(a: int16x4_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_s16(a: int16x4_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_s16(a: int16x8_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_s16(a: int16x8_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_s16(a: int16x8_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_s16(a: int16x8_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_s16(a: int16x8_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_s16(a: int16x8_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_s16(a: int16x8_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_s16(a: int16x8_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_s16(a: int16x8_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_s16(a: int16x8_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_s32(a: int32x2_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_s32(a: int32x2_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_s32(a: int32x2_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_s32(a: int32x2_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_s32(a: int32x2_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_s32(a: int32x2_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_s32(a: int32x2_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_s32(a: int32x2_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_s32(a: int32x2_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_s32(a: int32x4_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_s32(a: int32x4_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_s32(a: int32x4_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_s32(a: int32x4_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_s32(a: int32x4_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_s32(a: int32x4_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_s32(a: int32x4_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_s32(a: int32x4_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_s32(a: int32x4_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_s32(a: int32x4_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_s64(a: int64x1_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_s64(a: int64x1_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_s64(a: int64x1_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_s64(a: int64x1_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_s64(a: int64x1_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_s64(a: int64x1_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_s64(a: int64x1_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_s64(a: int64x1_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_s64(a: int64x1_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_s64(a: int64x2_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_s64(a: int64x2_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_s64(a: int64x2_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_s64(a: int64x2_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_s64(a: int64x2_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_s64(a: int64x2_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_s64(a: int64x2_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_s64(a: int64x2_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_s64(a: int64x2_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_s64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_s64(a: int64x2_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_u8(a: uint8x8_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_u8(a: uint8x8_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_u8(a: uint8x8_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_u8(a: uint8x8_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_u8(a: uint8x8_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_u8(a: uint8x8_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_u8(a: uint8x8_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_u8(a: uint8x8_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_u8(a: uint8x8_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_u8(a: uint8x16_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_u8(a: uint8x16_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_u8(a: uint8x16_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_u8(a: uint8x16_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_u8(a: uint8x16_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_u8(a: uint8x16_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_u8(a: uint8x16_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_u8(a: uint8x16_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_u8(a: uint8x16_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_u8(a: uint8x16_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_u16(a: uint16x4_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_u16(a: uint16x4_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_u16(a: uint16x4_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_u16(a: uint16x4_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_u16(a: uint16x4_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_u16(a: uint16x4_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_u16(a: uint16x4_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_u16(a: uint16x4_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_u16(a: uint16x4_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_u16(a: uint16x8_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_u16(a: uint16x8_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_u16(a: uint16x8_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_u16(a: uint16x8_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_u16(a: uint16x8_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_u16(a: uint16x8_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_u16(a: uint16x8_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_u16(a: uint16x8_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_u16(a: uint16x8_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_u16(a: uint16x8_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_u32(a: uint32x2_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_u32(a: uint32x2_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_u32(a: uint32x2_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_u32(a: uint32x2_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_u32(a: uint32x2_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_u32(a: uint32x2_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_u32(a: uint32x2_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_u32(a: uint32x2_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_u32(a: uint32x2_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_u32(a: uint32x4_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_u32(a: uint32x4_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_u32(a: uint32x4_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_u32(a: uint32x4_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_u32(a: uint32x4_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_u32(a: uint32x4_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_u32(a: uint32x4_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_u32(a: uint32x4_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_u32(a: uint32x4_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_u32(a: uint32x4_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_u64(a: uint64x1_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_u64(a: uint64x1_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_u64(a: uint64x1_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_u64(a: uint64x1_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_u64(a: uint64x1_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_u64(a: uint64x1_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_u64(a: uint64x1_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_u64(a: uint64x1_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_u64(a: uint64x1_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_u64(a: uint64x2_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_u64(a: uint64x2_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_u64(a: uint64x2_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_u64(a: uint64x2_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_u64(a: uint64x2_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_u64(a: uint64x2_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_u64(a: uint64x2_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_u64(a: uint64x2_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_u64(a: uint64x2_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_u64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_u64(a: uint64x2_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_p8(a: poly8x8_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_p8(a: poly8x8_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_p8(a: poly8x8_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_p8(a: poly8x8_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_p8(a: poly8x8_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_p8(a: poly8x8_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_p8(a: poly8x8_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_p8(a: poly8x8_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_p8(a: poly8x8_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_p8(a: poly8x16_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_p8(a: poly8x16_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_p8(a: poly8x16_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_p8(a: poly8x16_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_p8(a: poly8x16_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_p8(a: poly8x16_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_p8(a: poly8x16_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u64_p8(a: poly8x16_t) -> uint64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_p8(a: poly8x16_t) -> poly16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_p8)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p64_p8(a: poly8x16_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_f32_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_f32_p16(a: poly16x4_t) -> float32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_p16(a: poly16x4_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_p16(a: poly16x4_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s64_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s64_p16(a: poly16x4_t) -> int64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_p16(a: poly16x4_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_p16(a: poly16x4_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u64_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u64_p16(a: poly16x4_t) -> uint64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_p16(a: poly16x4_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p64_p16(a: poly16x4_t) -> poly64x1_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p128_p16(a: poly16x8_t) -> p128 {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_f32_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_f32_p16(a: poly16x8_t) -> float32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_p16(a: poly16x8_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_p16(a: poly16x8_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s64_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s64_p16(a: poly16x8_t) -> int64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_p16(a: poly16x8_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p16)"]
 #[inline(always)]
-#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -52749,35 +47337,8 @@ pub fn vreinterpretq_u32_p16(a: poly16x8_t) -> uint32x4_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_p16(a: poly16x8_t) -> uint32x4_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_p16)"]
 #[inline(always)]
-#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -52797,35 +47358,8 @@ pub fn vreinterpretq_u64_p16(a: poly16x8_t) -> uint64x2_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u64_p16(a: poly16x8_t) -> uint64x2_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: uint64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_p16)"]
 #[inline(always)]
-#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -52845,9 +47379,8 @@ pub fn vreinterpretq_p8_p16(a: poly16x8_t) -> poly8x16_t {
     unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_p16)"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_p16)"]
 #[inline(always)]
-#[cfg(target_endian = "big")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
 #[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
@@ -52863,16 +47396,344 @@ pub fn vreinterpretq_p8_p16(a: poly16x8_t) -> poly8x16_t {
     target_arch = "arm",
     unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
 )]
-pub fn vreinterpretq_p8_p16(a: poly16x8_t) -> poly8x16_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
+pub fn vreinterpretq_p64_p16(a: poly16x8_t) -> poly64x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s8_p64(a: poly64x1_t) -> int8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s16_p64(a: poly64x1_t) -> int16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_s32_p64(a: poly64x1_t) -> int32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u8_p64(a: poly64x1_t) -> uint8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u16_p64(a: poly64x1_t) -> uint16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_u32_p64(a: poly64x1_t) -> uint32x2_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p8_p64(a: poly64x1_t) -> poly8x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpret_p16_p64(a: poly64x1_t) -> poly16x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s8_p64(a: poly64x2_t) -> int8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s16_p64(a: poly64x2_t) -> int16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_s32_p64(a: poly64x2_t) -> int32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u8_p64(a: poly64x2_t) -> uint8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u16_p64(a: poly64x2_t) -> uint16x8_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_u32_p64(a: poly64x2_t) -> uint32x4_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p8_p64(a: poly64x2_t) -> poly8x16_t {
+    unsafe { transmute(a) }
+}
+#[doc = "Vector reinterpret cast operation"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_p64)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(target_arch = "arm", target_feature(enable = "v7"))]
+#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
+#[cfg_attr(
+    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
+    assert_instr(nop)
+)]
+#[cfg_attr(
+    not(target_arch = "arm"),
+    stable(feature = "neon_intrinsics", since = "1.59.0")
+)]
+#[cfg_attr(
+    target_arch = "arm",
+    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
+)]
+pub fn vreinterpretq_p16_p64(a: poly64x2_t) -> poly16x8_t {
+    unsafe { transmute(a) }
 }
 #[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p128)"]
@@ -53404,1582 +48265,6 @@ pub fn vreinterpretq_p64_p128(a: p128) -> poly64x2_t {
     }
 }
 #[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_s8(a: int8x8_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_s8(a: int8x8_t) -> poly64x1_t {
-    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s8(a: int8x16_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s8(a: int8x16_t) -> p128 {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_s8(a: int8x16_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_s8(a: int8x16_t) -> poly64x2_t {
-    let a: int8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_s16(a: int16x4_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_s16(a: int16x4_t) -> poly64x1_t {
-    let a: int16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s16(a: int16x8_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s16(a: int16x8_t) -> p128 {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_s16(a: int16x8_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_s16(a: int16x8_t) -> poly64x2_t {
-    let a: int16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_s32(a: int32x2_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_s32(a: int32x2_t) -> poly64x1_t {
-    let a: int32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s32(a: int32x4_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s32(a: int32x4_t) -> p128 {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_s32(a: int32x4_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_s32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_s32(a: int32x4_t) -> poly64x2_t {
-    let a: int32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s64(a: int64x2_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_s64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_s64(a: int64x2_t) -> p128 {
-    let a: int64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_u8(a: uint8x8_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_u8(a: uint8x8_t) -> poly64x1_t {
-    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u8(a: uint8x16_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u8(a: uint8x16_t) -> p128 {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_u8(a: uint8x16_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_u8(a: uint8x16_t) -> poly64x2_t {
-    let a: uint8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_u16(a: uint16x4_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_u16(a: uint16x4_t) -> poly64x1_t {
-    let a: uint16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u16(a: uint16x8_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u16(a: uint16x8_t) -> p128 {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_u16(a: uint16x8_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_u16(a: uint16x8_t) -> poly64x2_t {
-    let a: uint16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_u32(a: uint32x2_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_u32(a: uint32x2_t) -> poly64x1_t {
-    let a: uint32x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u32(a: uint32x4_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u32(a: uint32x4_t) -> p128 {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_u32(a: uint32x4_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_u32)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_u32(a: uint32x4_t) -> poly64x2_t {
-    let a: uint32x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u64(a: uint64x2_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_u64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_u64(a: uint64x2_t) -> p128 {
-    let a: uint64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_p8(a: poly8x8_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_p8(a: poly8x8_t) -> poly64x1_t {
-    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_p8(a: poly8x16_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_p8(a: poly8x16_t) -> p128 {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_p8(a: poly8x16_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_p8)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_p8(a: poly8x16_t) -> poly64x2_t {
-    let a: poly8x16_t =
-        unsafe { simd_shuffle!(a, a, [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_p16(a: poly16x4_t) -> poly64x1_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p64_p16(a: poly16x4_t) -> poly64x1_t {
-    let a: poly16x4_t = unsafe { simd_shuffle!(a, a, [3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_p16(a: poly16x8_t) -> p128 {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p128_p16(a: poly16x8_t) -> p128 {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_p16(a: poly16x8_t) -> poly64x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p64_p16)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p64_p16(a: poly16x8_t) -> poly64x2_t {
-    let a: poly16x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
-    unsafe {
-        let ret_val: poly64x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_p64(a: poly64x1_t) -> int8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s8_p64(a: poly64x1_t) -> int8x8_t {
-    unsafe {
-        let ret_val: int8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_p64(a: poly64x1_t) -> int16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s16_p64(a: poly64x1_t) -> int16x4_t {
-    unsafe {
-        let ret_val: int16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_p64(a: poly64x1_t) -> int32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_s32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_s32_p64(a: poly64x1_t) -> int32x2_t {
-    unsafe {
-        let ret_val: int32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_p64(a: poly64x1_t) -> uint8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u8_p64(a: poly64x1_t) -> uint8x8_t {
-    unsafe {
-        let ret_val: uint8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_p64(a: poly64x1_t) -> uint16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u16_p64(a: poly64x1_t) -> uint16x4_t {
-    unsafe {
-        let ret_val: uint16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_p64(a: poly64x1_t) -> uint32x2_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_u32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_u32_p64(a: poly64x1_t) -> uint32x2_t {
-    unsafe {
-        let ret_val: uint32x2_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_p64(a: poly64x1_t) -> poly8x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p8_p64(a: poly64x1_t) -> poly8x8_t {
-    unsafe {
-        let ret_val: poly8x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_p64(a: poly64x1_t) -> poly16x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpret_p16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpret_p16_p64(a: poly64x1_t) -> poly16x4_t {
-    unsafe {
-        let ret_val: poly16x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p128_p64)"]
 #[inline(always)]
 #[cfg(target_endian = "little")]
@@ -55023,402 +48308,6 @@ pub fn vreinterpretq_p128_p64(a: poly64x2_t) -> p128 {
 pub fn vreinterpretq_p128_p64(a: poly64x2_t) -> p128 {
     let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
     unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_p64(a: poly64x2_t) -> int8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s8_p64(a: poly64x2_t) -> int8x16_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_p64(a: poly64x2_t) -> int16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s16_p64(a: poly64x2_t) -> int16x8_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_p64(a: poly64x2_t) -> int32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_s32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_s32_p64(a: poly64x2_t) -> int32x4_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: int32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_p64(a: poly64x2_t) -> uint8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u8_p64(a: poly64x2_t) -> uint8x16_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_p64(a: poly64x2_t) -> uint16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u16_p64(a: poly64x2_t) -> uint16x8_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_p64(a: poly64x2_t) -> uint32x4_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u32_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_u32_p64(a: poly64x2_t) -> uint32x4_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: uint32x4_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [3, 2, 1, 0])
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_p64(a: poly64x2_t) -> poly8x16_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p8_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p8_p64(a: poly64x2_t) -> poly8x16_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly8x16_t = transmute(a);
-        simd_shuffle!(
-            ret_val,
-            ret_val,
-            [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        )
-    }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "little")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_p64(a: poly64x2_t) -> poly16x8_t {
-    unsafe { transmute(a) }
-}
-#[doc = "Vector reinterpret cast operation"]
-#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_p16_p64)"]
-#[inline(always)]
-#[cfg(target_endian = "big")]
-#[target_feature(enable = "neon,aes")]
-#[cfg_attr(target_arch = "arm", target_feature(enable = "v8"))]
-#[cfg_attr(all(test, target_arch = "arm"), assert_instr(nop))]
-#[cfg_attr(
-    all(test, any(target_arch = "aarch64", target_arch = "arm64ec")),
-    assert_instr(nop)
-)]
-#[cfg_attr(
-    not(target_arch = "arm"),
-    stable(feature = "neon_intrinsics", since = "1.59.0")
-)]
-#[cfg_attr(
-    target_arch = "arm",
-    unstable(feature = "stdarch_arm_neon_intrinsics", issue = "111800")
-)]
-pub fn vreinterpretq_p16_p64(a: poly64x2_t) -> poly16x8_t {
-    let a: poly64x2_t = unsafe { simd_shuffle!(a, a, [1, 0]) };
-    unsafe {
-        let ret_val: poly16x8_t = transmute(a);
-        simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0])
-    }
 }
 #[doc = "Reversing vector elements (swap endianness)"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev16_p8)"]
