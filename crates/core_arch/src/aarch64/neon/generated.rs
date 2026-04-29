@@ -38552,7 +38552,7 @@ pub fn vtbl1_p8(a: poly8x8_t, b: uint8x8_t) -> poly8x8_t {
 #[cfg_attr(test, assert_instr(tbl))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbl2_s8(a: int8x8x2_t, b: int8x8_t) -> int8x8_t {
-    unsafe { vqtbl1(transmute(vcombine_s8(a.0, a.1)), transmute(b)) }
+    vqtbl1_s8(vcombine_s8(a.0, a.1), vreinterpret_u8_s8(b))
 }
 #[doc = "Table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl2_u8)"]
@@ -38561,7 +38561,7 @@ pub fn vtbl2_s8(a: int8x8x2_t, b: int8x8_t) -> int8x8_t {
 #[cfg_attr(test, assert_instr(tbl))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbl2_u8(a: uint8x8x2_t, b: uint8x8_t) -> uint8x8_t {
-    unsafe { transmute(vqtbl1(transmute(vcombine_u8(a.0, a.1)), b)) }
+    vqtbl1_u8(vcombine_u8(a.0, a.1), b)
 }
 #[doc = "Table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl2_p8)"]
@@ -38570,7 +38570,7 @@ pub fn vtbl2_u8(a: uint8x8x2_t, b: uint8x8_t) -> uint8x8_t {
 #[cfg_attr(test, assert_instr(tbl))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbl2_p8(a: poly8x8x2_t, b: uint8x8_t) -> poly8x8_t {
-    unsafe { transmute(vqtbl1(transmute(vcombine_p8(a.0, a.1)), b)) }
+    vqtbl1_p8(vcombine_p8(a.0, a.1), b)
 }
 #[doc = "Table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl3_s8)"]
@@ -38579,11 +38579,11 @@ pub fn vtbl2_p8(a: poly8x8x2_t, b: uint8x8_t) -> poly8x8_t {
 #[cfg_attr(test, assert_instr(tbl))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbl3_s8(a: int8x8x3_t, b: int8x8_t) -> int8x8_t {
-    let x = int8x16x2_t(
+    vqtbl2(
         vcombine_s8(a.0, a.1),
         vcombine_s8(a.2, unsafe { crate::mem::zeroed() }),
-    );
-    unsafe { transmute(vqtbl2(transmute(x.0), transmute(x.1), transmute(b))) }
+        vreinterpret_u8_s8(b),
+    )
 }
 #[doc = "Table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl3_u8)"]
@@ -38592,11 +38592,11 @@ pub fn vtbl3_s8(a: int8x8x3_t, b: int8x8_t) -> int8x8_t {
 #[cfg_attr(test, assert_instr(tbl))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbl3_u8(a: uint8x8x3_t, b: uint8x8_t) -> uint8x8_t {
-    let x = uint8x16x2_t(
-        vcombine_u8(a.0, a.1),
-        vcombine_u8(a.2, unsafe { crate::mem::zeroed() }),
-    );
-    unsafe { transmute(vqtbl2(transmute(x.0), transmute(x.1), b)) }
+    vreinterpret_u8_s8(vqtbl2(
+        vcombine_s8(vreinterpret_s8_u8(a.0), vreinterpret_s8_u8(a.1)),
+        vcombine_s8(vreinterpret_s8_u8(a.2), unsafe { crate::mem::zeroed() }),
+        b,
+    ))
 }
 #[doc = "Table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl3_p8)"]
@@ -38605,11 +38605,11 @@ pub fn vtbl3_u8(a: uint8x8x3_t, b: uint8x8_t) -> uint8x8_t {
 #[cfg_attr(test, assert_instr(tbl))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbl3_p8(a: poly8x8x3_t, b: uint8x8_t) -> poly8x8_t {
-    let x = poly8x16x2_t(
-        vcombine_p8(a.0, a.1),
-        vcombine_p8(a.2, unsafe { crate::mem::zeroed() }),
-    );
-    unsafe { transmute(vqtbl2(transmute(x.0), transmute(x.1), b)) }
+    vreinterpret_p8_s8(vqtbl2(
+        vcombine_s8(vreinterpret_s8_p8(a.0), vreinterpret_s8_p8(a.1)),
+        vcombine_s8(vreinterpret_s8_p8(a.2), unsafe { crate::mem::zeroed() }),
+        b,
+    ))
 }
 #[doc = "Table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl4_s8)"]
