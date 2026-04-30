@@ -12,6 +12,10 @@ pub fn write_wrapper_c<T: IntrinsicTypeDefinition>(
 ) -> std::io::Result<()> {
     write!(w, "{notice}")?;
 
+    writeln!(w, "#pragma STDC FENV_ACCESS ON")?;
+    writeln!(w, "#pragma STDC FP_CONTRACT OFF")?;
+    writeln!(w, "#pragma STDC CX_LIMITED_RANGE ON")?;
+
     writeln!(w, "#include <stdint.h>")?;
     writeln!(w, "#include <stddef.h>")?;
 
