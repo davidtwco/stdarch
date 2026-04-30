@@ -158,6 +158,7 @@ fn generate_file(
 // cargo run --bin=stdarch-gen-arm -- crates/stdarch-gen-arm/spec
 // ```
 #![allow(improper_ctypes)]
+#![allow(unused_unsafe)] // FIXME(arm-maintainers)
 
 #[cfg(test)]
 use stdarch_test::assert_instr;
