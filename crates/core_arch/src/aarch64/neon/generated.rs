@@ -20337,6 +20337,7 @@ pub fn vmlaq_f64(a: float64x2_t, b: float64x2_t, c: float64x2_t) -> float64x2_t 
 #[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_lane_s16<const LANE: i32>(a: int32x4_t, b: int16x8_t, c: int16x4_t) -> int32x4_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmlal_high_s16(a, b, simd_shuffle!(c, c, [LANE as u32; 8])) }
@@ -20348,6 +20349,7 @@ pub fn vmlal_high_lane_s16<const LANE: i32>(a: int32x4_t, b: int16x8_t, c: int16
 #[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_laneq_s16<const LANE: i32>(
     a: int32x4_t,
     b: int16x8_t,
@@ -20363,6 +20365,7 @@ pub fn vmlal_high_laneq_s16<const LANE: i32>(
 #[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_lane_s32<const LANE: i32>(a: int64x2_t, b: int32x4_t, c: int32x2_t) -> int64x2_t {
     static_assert_uimm_bits!(LANE, 1);
     unsafe { vmlal_high_s32(a, b, simd_shuffle!(c, c, [LANE as u32; 4])) }
@@ -20374,6 +20377,7 @@ pub fn vmlal_high_lane_s32<const LANE: i32>(a: int64x2_t, b: int32x4_t, c: int32
 #[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_laneq_s32<const LANE: i32>(
     a: int64x2_t,
     b: int32x4_t,
@@ -20383,12 +20387,69 @@ pub fn vmlal_high_laneq_s32<const LANE: i32>(
     unsafe { vmlal_high_s32(a, b, simd_shuffle!(c, c, [LANE as u32; 4])) }
 }
 #[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_lane_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_lane_s16<const LANE: i32>(a: int32x4_t, b: int16x8_t, c: int16x4_t) -> int32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlal_high_s16(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_laneq_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_laneq_s16<const LANE: i32>(
+    a: int32x4_t,
+    b: int16x8_t,
+    c: int16x8_t,
+) -> int32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vmlal_high_s16(a, b, simd_shuffle!(c, c, [7 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_lane_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_lane_s32<const LANE: i32>(a: int64x2_t, b: int32x4_t, c: int32x2_t) -> int64x2_t {
+    static_assert_uimm_bits!(LANE, 1);
+    unsafe { vmlal_high_s32(a, b, simd_shuffle!(c, c, [1 - LANE as u32; 4])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_laneq_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_laneq_s32<const LANE: i32>(
+    a: int64x2_t,
+    b: int32x4_t,
+    c: int32x4_t,
+) -> int64x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlal_high_s32(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 4])) }
+}
+#[doc = "Multiply-add long"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_lane_u16)"]
 #[inline(always)]
 #[target_feature(enable = "neon")]
 #[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_lane_u16<const LANE: i32>(
     a: uint32x4_t,
     b: uint16x8_t,
@@ -20404,6 +20465,7 @@ pub fn vmlal_high_lane_u16<const LANE: i32>(
 #[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_laneq_u16<const LANE: i32>(
     a: uint32x4_t,
     b: uint16x8_t,
@@ -20419,6 +20481,7 @@ pub fn vmlal_high_laneq_u16<const LANE: i32>(
 #[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_lane_u32<const LANE: i32>(
     a: uint64x2_t,
     b: uint32x4_t,
@@ -20434,6 +20497,7 @@ pub fn vmlal_high_lane_u32<const LANE: i32>(
 #[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlal_high_laneq_u32<const LANE: i32>(
     a: uint64x2_t,
     b: uint32x4_t,
@@ -20441,6 +20505,70 @@ pub fn vmlal_high_laneq_u32<const LANE: i32>(
 ) -> uint64x2_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmlal_high_u32(a, b, simd_shuffle!(c, c, [LANE as u32; 4])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_lane_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_lane_u16<const LANE: i32>(
+    a: uint32x4_t,
+    b: uint16x8_t,
+    c: uint16x4_t,
+) -> uint32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlal_high_u16(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_laneq_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_laneq_u16<const LANE: i32>(
+    a: uint32x4_t,
+    b: uint16x8_t,
+    c: uint16x8_t,
+) -> uint32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vmlal_high_u16(a, b, simd_shuffle!(c, c, [7 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_lane_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_lane_u32<const LANE: i32>(
+    a: uint64x2_t,
+    b: uint32x4_t,
+    c: uint32x2_t,
+) -> uint64x2_t {
+    static_assert_uimm_bits!(LANE, 1);
+    unsafe { vmlal_high_u32(a, b, simd_shuffle!(c, c, [1 - LANE as u32; 4])) }
+}
+#[doc = "Multiply-add long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_laneq_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlal2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlal_high_laneq_u32<const LANE: i32>(
+    a: uint64x2_t,
+    b: uint32x4_t,
+    c: uint32x4_t,
+) -> uint64x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlal_high_u32(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 4])) }
 }
 #[doc = "Multiply-add long"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlal_high_n_s16)"]
@@ -20699,6 +20827,7 @@ pub fn vmlsq_f64(a: float64x2_t, b: float64x2_t, c: float64x2_t) -> float64x2_t 
 #[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_lane_s16<const LANE: i32>(a: int32x4_t, b: int16x8_t, c: int16x4_t) -> int32x4_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmlsl_high_s16(a, b, simd_shuffle!(c, c, [LANE as u32; 8])) }
@@ -20710,6 +20839,7 @@ pub fn vmlsl_high_lane_s16<const LANE: i32>(a: int32x4_t, b: int16x8_t, c: int16
 #[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_laneq_s16<const LANE: i32>(
     a: int32x4_t,
     b: int16x8_t,
@@ -20725,6 +20855,7 @@ pub fn vmlsl_high_laneq_s16<const LANE: i32>(
 #[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_lane_s32<const LANE: i32>(a: int64x2_t, b: int32x4_t, c: int32x2_t) -> int64x2_t {
     static_assert_uimm_bits!(LANE, 1);
     unsafe { vmlsl_high_s32(a, b, simd_shuffle!(c, c, [LANE as u32; 4])) }
@@ -20736,6 +20867,7 @@ pub fn vmlsl_high_lane_s32<const LANE: i32>(a: int64x2_t, b: int32x4_t, c: int32
 #[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_laneq_s32<const LANE: i32>(
     a: int64x2_t,
     b: int32x4_t,
@@ -20745,12 +20877,69 @@ pub fn vmlsl_high_laneq_s32<const LANE: i32>(
     unsafe { vmlsl_high_s32(a, b, simd_shuffle!(c, c, [LANE as u32; 4])) }
 }
 #[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_lane_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_lane_s16<const LANE: i32>(a: int32x4_t, b: int16x8_t, c: int16x4_t) -> int32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlsl_high_s16(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_laneq_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_laneq_s16<const LANE: i32>(
+    a: int32x4_t,
+    b: int16x8_t,
+    c: int16x8_t,
+) -> int32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vmlsl_high_s16(a, b, simd_shuffle!(c, c, [7 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_lane_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_lane_s32<const LANE: i32>(a: int64x2_t, b: int32x4_t, c: int32x2_t) -> int64x2_t {
+    static_assert_uimm_bits!(LANE, 1);
+    unsafe { vmlsl_high_s32(a, b, simd_shuffle!(c, c, [1 - LANE as u32; 4])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_laneq_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_laneq_s32<const LANE: i32>(
+    a: int64x2_t,
+    b: int32x4_t,
+    c: int32x4_t,
+) -> int64x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlsl_high_s32(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 4])) }
+}
+#[doc = "Multiply-subtract long"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_lane_u16)"]
 #[inline(always)]
 #[target_feature(enable = "neon")]
 #[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_lane_u16<const LANE: i32>(
     a: uint32x4_t,
     b: uint16x8_t,
@@ -20766,6 +20955,7 @@ pub fn vmlsl_high_lane_u16<const LANE: i32>(
 #[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_laneq_u16<const LANE: i32>(
     a: uint32x4_t,
     b: uint16x8_t,
@@ -20781,6 +20971,7 @@ pub fn vmlsl_high_laneq_u16<const LANE: i32>(
 #[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_lane_u32<const LANE: i32>(
     a: uint64x2_t,
     b: uint32x4_t,
@@ -20796,6 +20987,7 @@ pub fn vmlsl_high_lane_u32<const LANE: i32>(
 #[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
 #[rustc_legacy_const_generics(3)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmlsl_high_laneq_u32<const LANE: i32>(
     a: uint64x2_t,
     b: uint32x4_t,
@@ -20803,6 +20995,70 @@ pub fn vmlsl_high_laneq_u32<const LANE: i32>(
 ) -> uint64x2_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmlsl_high_u32(a, b, simd_shuffle!(c, c, [LANE as u32; 4])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_lane_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_lane_u16<const LANE: i32>(
+    a: uint32x4_t,
+    b: uint16x8_t,
+    c: uint16x4_t,
+) -> uint32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlsl_high_u16(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_laneq_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_laneq_u16<const LANE: i32>(
+    a: uint32x4_t,
+    b: uint16x8_t,
+    c: uint16x8_t,
+) -> uint32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vmlsl_high_u16(a, b, simd_shuffle!(c, c, [7 - LANE as u32; 8])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_lane_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_lane_u32<const LANE: i32>(
+    a: uint64x2_t,
+    b: uint32x4_t,
+    c: uint32x2_t,
+) -> uint64x2_t {
+    static_assert_uimm_bits!(LANE, 1);
+    unsafe { vmlsl_high_u32(a, b, simd_shuffle!(c, c, [1 - LANE as u32; 4])) }
+}
+#[doc = "Multiply-subtract long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_laneq_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umlsl2, LANE = 1))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmlsl_high_laneq_u32<const LANE: i32>(
+    a: uint64x2_t,
+    b: uint32x4_t,
+    c: uint32x4_t,
+) -> uint64x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmlsl_high_u32(a, b, simd_shuffle!(c, c, [3 - LANE as u32; 4])) }
 }
 #[doc = "Multiply-subtract long"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmlsl_high_n_s16)"]
@@ -21623,6 +21879,7 @@ pub fn vmulh_laneq_f16<const LANE: i32>(a: f16, b: float16x8_t) -> f16 {
 #[cfg_attr(test, assert_instr(smull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_lane_s16<const LANE: i32>(a: int16x8_t, b: int16x4_t) -> int32x4_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmull_high_s16(a, simd_shuffle!(b, b, [LANE as u32; 8])) }
@@ -21634,6 +21891,7 @@ pub fn vmull_high_lane_s16<const LANE: i32>(a: int16x8_t, b: int16x4_t) -> int32
 #[cfg_attr(test, assert_instr(smull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_laneq_s16<const LANE: i32>(a: int16x8_t, b: int16x8_t) -> int32x4_t {
     static_assert_uimm_bits!(LANE, 3);
     unsafe { vmull_high_s16(a, simd_shuffle!(b, b, [LANE as u32; 8])) }
@@ -21645,6 +21903,7 @@ pub fn vmull_high_laneq_s16<const LANE: i32>(a: int16x8_t, b: int16x8_t) -> int3
 #[cfg_attr(test, assert_instr(smull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_lane_s32<const LANE: i32>(a: int32x4_t, b: int32x2_t) -> int64x2_t {
     static_assert_uimm_bits!(LANE, 1);
     unsafe { vmull_high_s32(a, simd_shuffle!(b, b, [LANE as u32; 4])) }
@@ -21656,9 +21915,58 @@ pub fn vmull_high_lane_s32<const LANE: i32>(a: int32x4_t, b: int32x2_t) -> int64
 #[cfg_attr(test, assert_instr(smull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_laneq_s32<const LANE: i32>(a: int32x4_t, b: int32x4_t) -> int64x2_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmull_high_s32(a, simd_shuffle!(b, b, [LANE as u32; 4])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_lane_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_lane_s16<const LANE: i32>(a: int16x8_t, b: int16x4_t) -> int32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmull_high_s16(a, simd_shuffle!(b, b, [3 - LANE as u32; 8])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_laneq_s16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_laneq_s16<const LANE: i32>(a: int16x8_t, b: int16x8_t) -> int32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vmull_high_s16(a, simd_shuffle!(b, b, [7 - LANE as u32; 8])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_lane_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_lane_s32<const LANE: i32>(a: int32x4_t, b: int32x2_t) -> int64x2_t {
+    static_assert_uimm_bits!(LANE, 1);
+    unsafe { vmull_high_s32(a, simd_shuffle!(b, b, [1 - LANE as u32; 4])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_laneq_s32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(smull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_laneq_s32<const LANE: i32>(a: int32x4_t, b: int32x4_t) -> int64x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmull_high_s32(a, simd_shuffle!(b, b, [3 - LANE as u32; 4])) }
 }
 #[doc = "Multiply long"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_lane_u16)"]
@@ -21667,6 +21975,7 @@ pub fn vmull_high_laneq_s32<const LANE: i32>(a: int32x4_t, b: int32x4_t) -> int6
 #[cfg_attr(test, assert_instr(umull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_lane_u16<const LANE: i32>(a: uint16x8_t, b: uint16x4_t) -> uint32x4_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmull_high_u16(a, simd_shuffle!(b, b, [LANE as u32; 8])) }
@@ -21678,6 +21987,7 @@ pub fn vmull_high_lane_u16<const LANE: i32>(a: uint16x8_t, b: uint16x4_t) -> uin
 #[cfg_attr(test, assert_instr(umull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_laneq_u16<const LANE: i32>(a: uint16x8_t, b: uint16x8_t) -> uint32x4_t {
     static_assert_uimm_bits!(LANE, 3);
     unsafe { vmull_high_u16(a, simd_shuffle!(b, b, [LANE as u32; 8])) }
@@ -21689,6 +21999,7 @@ pub fn vmull_high_laneq_u16<const LANE: i32>(a: uint16x8_t, b: uint16x8_t) -> ui
 #[cfg_attr(test, assert_instr(umull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_lane_u32<const LANE: i32>(a: uint32x4_t, b: uint32x2_t) -> uint64x2_t {
     static_assert_uimm_bits!(LANE, 1);
     unsafe { vmull_high_u32(a, simd_shuffle!(b, b, [LANE as u32; 4])) }
@@ -21700,9 +22011,58 @@ pub fn vmull_high_lane_u32<const LANE: i32>(a: uint32x4_t, b: uint32x2_t) -> uin
 #[cfg_attr(test, assert_instr(umull2, LANE = 1))]
 #[rustc_legacy_const_generics(2)]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "little")]
 pub fn vmull_high_laneq_u32<const LANE: i32>(a: uint32x4_t, b: uint32x4_t) -> uint64x2_t {
     static_assert_uimm_bits!(LANE, 2);
     unsafe { vmull_high_u32(a, simd_shuffle!(b, b, [LANE as u32; 4])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_lane_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_lane_u16<const LANE: i32>(a: uint16x8_t, b: uint16x4_t) -> uint32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmull_high_u16(a, simd_shuffle!(b, b, [3 - LANE as u32; 8])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_laneq_u16)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_laneq_u16<const LANE: i32>(a: uint16x8_t, b: uint16x8_t) -> uint32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vmull_high_u16(a, simd_shuffle!(b, b, [7 - LANE as u32; 8])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_lane_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_lane_u32<const LANE: i32>(a: uint32x4_t, b: uint32x2_t) -> uint64x2_t {
+    static_assert_uimm_bits!(LANE, 1);
+    unsafe { vmull_high_u32(a, simd_shuffle!(b, b, [1 - LANE as u32; 4])) }
+}
+#[doc = "Multiply long"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_laneq_u32)"]
+#[inline(always)]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(umull2, LANE = 1))]
+#[rustc_legacy_const_generics(2)]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+#[cfg(target_endian = "big")]
+pub fn vmull_high_laneq_u32<const LANE: i32>(a: uint32x4_t, b: uint32x4_t) -> uint64x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vmull_high_u32(a, simd_shuffle!(b, b, [3 - LANE as u32; 4])) }
 }
 #[doc = "Multiply long"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_n_s16)"]
