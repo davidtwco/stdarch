@@ -38644,59 +38644,98 @@ pub fn vtbl4_p8(a: poly8x8x4_t, b: uint8x8_t) -> poly8x8_t {
 #[doc = "Extended table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_s8)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(test, assert_instr(tbx))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbx1_s8(a: int8x8_t, b: int8x8_t, c: int8x8_t) -> int8x8_t {
-    unsafe {
-        simd_select(
-            simd_lt::<int8x8_t, int8x8_t>(c, transmute(i8x8::splat(8))),
-            transmute(vqtbx1(
-                transmute(a),
-                transmute(vcombine_s8(b, crate::mem::zeroed())),
-                transmute(c),
-            )),
-            a,
-        )
-    }
+    vqtbx1(
+        a,
+        vcombine_s8(b, unsafe { crate::mem::zeroed() }),
+        vreinterpret_u8_s8(c),
+    )
+}
+#[doc = "Extended table look-up"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_s8)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(tbx))]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+pub fn vtbx1_s8(a: int8x8_t, b: int8x8_t, c: int8x8_t) -> int8x8_t {
+    let a: int8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let b: int8x8_t = unsafe { simd_shuffle!(b, b, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let c: int8x8_t = unsafe { simd_shuffle!(c, c, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let ret_val: int8x8_t = vqtbx1(
+        a,
+        vcombine_s8(b, unsafe { crate::mem::zeroed() }),
+        vreinterpret_u8_s8(c),
+    );
+    unsafe { simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0]) }
 }
 #[doc = "Extended table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_u8)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(test, assert_instr(tbx))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbx1_u8(a: uint8x8_t, b: uint8x8_t, c: uint8x8_t) -> uint8x8_t {
-    unsafe {
-        simd_select(
-            simd_lt::<uint8x8_t, int8x8_t>(c, transmute(u8x8::splat(8))),
-            transmute(vqtbx1(
-                transmute(a),
-                transmute(vcombine_u8(b, crate::mem::zeroed())),
-                c,
-            )),
-            a,
-        )
-    }
+    vreinterpret_u8_s8(vqtbx1(
+        vreinterpret_s8_u8(a),
+        vcombine_s8(vreinterpret_s8_u8(b), unsafe { crate::mem::zeroed() }),
+        c,
+    ))
+}
+#[doc = "Extended table look-up"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_u8)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(tbx))]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+pub fn vtbx1_u8(a: uint8x8_t, b: uint8x8_t, c: uint8x8_t) -> uint8x8_t {
+    let a: uint8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let b: uint8x8_t = unsafe { simd_shuffle!(b, b, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let c: uint8x8_t = unsafe { simd_shuffle!(c, c, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let ret_val: uint8x8_t = vreinterpret_u8_s8(vqtbx1(
+        vreinterpret_s8_u8(a),
+        vcombine_s8(vreinterpret_s8_u8(b), unsafe { crate::mem::zeroed() }),
+        c,
+    ));
+    unsafe { simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0]) }
 }
 #[doc = "Extended table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_p8)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[target_feature(enable = "neon")]
 #[cfg_attr(test, assert_instr(tbx))]
 #[stable(feature = "neon_intrinsics", since = "1.59.0")]
 pub fn vtbx1_p8(a: poly8x8_t, b: poly8x8_t, c: uint8x8_t) -> poly8x8_t {
-    unsafe {
-        simd_select(
-            simd_lt::<uint8x8_t, int8x8_t>(c, transmute(u8x8::splat(8))),
-            transmute(vqtbx1(
-                transmute(a),
-                transmute(vcombine_p8(b, crate::mem::zeroed())),
-                c,
-            )),
-            a,
-        )
-    }
+    vreinterpret_p8_s8(vqtbx1(
+        vreinterpret_s8_p8(a),
+        vcombine_s8(vreinterpret_s8_p8(b), unsafe { crate::mem::zeroed() }),
+        c,
+    ))
+}
+#[doc = "Extended table look-up"]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_p8)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[target_feature(enable = "neon")]
+#[cfg_attr(test, assert_instr(tbx))]
+#[stable(feature = "neon_intrinsics", since = "1.59.0")]
+pub fn vtbx1_p8(a: poly8x8_t, b: poly8x8_t, c: uint8x8_t) -> poly8x8_t {
+    let a: poly8x8_t = unsafe { simd_shuffle!(a, a, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let b: poly8x8_t = unsafe { simd_shuffle!(b, b, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let c: uint8x8_t = unsafe { simd_shuffle!(c, c, [7, 6, 5, 4, 3, 2, 1, 0]) };
+    let ret_val: poly8x8_t = vreinterpret_p8_s8(vqtbx1(
+        vreinterpret_s8_p8(a),
+        vcombine_s8(vreinterpret_s8_p8(b), unsafe { crate::mem::zeroed() }),
+        c,
+    ));
+    unsafe { simd_shuffle!(ret_val, ret_val, [7, 6, 5, 4, 3, 2, 1, 0]) }
 }
 #[doc = "Extended table look-up"]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx2_s8)"]

@@ -12582,29 +12582,40 @@ intrinsics:
     attr:
       - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [tbx]]}]]
       - *neon-stable
-    big_endian_inverse: false
+    big_endian_inverse: true
     safety: safe
     types:
-      - [int8x8_t, "int8x8_t", "transmute(c)", "i8x8::splat(8)", "int8x8"]
-      - [uint8x8_t, "uint8x8_t", "c", "u8x8::splat(8)", "uint8x8"]
-      - [poly8x8_t, "uint8x8_t", "c", "u8x8::splat(8)", "uint8x8"]
+      - [uint8x8_t, "uint8x8_t"]
+      - [poly8x8_t, "uint8x8_t"]
     compose:
       - FnCall:
-          - simd_select
-          - - FnCall:
-                - "simd_lt::<{type[4]}_t, int8x8_t>"
-                - - c
-                  - FnCall: [transmute, ["{type[3]}"]]
-            - FnCall:
-                - transmute
-                - - FnCall:
-                      - "vqtbx1"
-                      - - "transmute(a)"
-                        - FnCall:
-                            - transmute
-                            - - FnCall: ["vcombine{neon_type[0].no}", [b, "crate::mem::zeroed()"]]
-                        - "{type[2]}"
-            - a
+        - 'vreinterpret{neon_type[0].no}_s8'
+        - - FnCall:
+            - 'vqtbx1'
+            - - FnCall: ['vreinterpret_s8{neon_type[0].no}', [a]]
+              - FnCall:
+                - 'vcombine_s8'
+                - - FnCall: ['vreinterpret_s8{neon_type[0].no}', [b]]
+                  - 'unsafe {{ crate::mem::zeroed() }}'
+              - c
+
+  - name: "vtbx1{neon_type[0].no}"
+    doc: "Extended table look-up"
+    arguments: ["a: {neon_type[0]}", "b: {neon_type[0]}", "c: {neon_type[1]}"]
+    return_type: "{neon_type[0]}"
+    attr:
+      - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [tbx]]}]]
+      - *neon-stable
+    big_endian_inverse: true
+    safety: safe
+    types:
+      - [int8x8_t, "int8x8_t"]
+    compose:
+      - FnCall:
+        - 'vqtbx1'
+        - - a
+          - FnCall: ['vcombine{neon_type[0].no}', [b, 'unsafe {{ crate::mem::zeroed() }}']]
+          - FnCall: ['vreinterpret_u8{neon_type[0].no}', [c]]
 
   - name: "vtbx2{neon_type[0].no}"
     doc: "Extended table look-up"
