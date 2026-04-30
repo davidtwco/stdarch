@@ -16050,6 +16050,7 @@ pub fn vfmlalq_high_f16(r: float32x4_t, a: float16x8_t, b: float16x8_t) -> float
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_lane_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16067,6 +16068,7 @@ pub fn vfmlal_lane_high_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_laneq_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16084,6 +16086,7 @@ pub fn vfmlal_laneq_high_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_lane_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16101,6 +16104,7 @@ pub fn vfmlalq_lane_high_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_laneq_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16116,8 +16120,81 @@ pub fn vfmlalq_laneq_high_f16<const LANE: i32>(
     unsafe { vfmlalq_high_f16(r, a, vdupq_n_f16(simd_extract!(b, LANE as u32))) }
 }
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_lane_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlal_lane_high_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x4_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlal_high_f16(r, a, vdup_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_laneq_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlal_laneq_high_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x8_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlal_high_f16(r, a, vdup_n_f16(simd_extract!(b, 7 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_lane_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlalq_lane_high_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x4_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlalq_high_f16(r, a, vdupq_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_laneq_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlalq_laneq_high_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x8_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlalq_high_f16(r, a, vdupq_n_f16(simd_extract!(b, 7 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_lane_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16135,6 +16212,7 @@ pub fn vfmlal_lane_low_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_laneq_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16152,6 +16230,7 @@ pub fn vfmlal_laneq_low_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_lane_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16169,6 +16248,7 @@ pub fn vfmlalq_lane_low_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_laneq_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16182,6 +16262,78 @@ pub fn vfmlalq_laneq_low_f16<const LANE: i32>(
 ) -> float32x4_t {
     static_assert_uimm_bits!(LANE, 3);
     unsafe { vfmlalq_low_f16(r, a, vdupq_n_f16(simd_extract!(b, LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_lane_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlal_lane_low_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x4_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlal_low_f16(r, a, vdup_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_laneq_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlal_laneq_low_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x8_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlal_low_f16(r, a, vdup_n_f16(simd_extract!(b, 7 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_lane_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlalq_lane_low_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x4_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlalq_low_f16(r, a, vdupq_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Add Long to accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlalq_laneq_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlal, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlalq_laneq_low_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x8_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlalq_low_f16(r, a, vdupq_n_f16(simd_extract!(b, 7 - LANE as u32))) }
 }
 #[doc = "Floating-point fused Multiply-Add Long to accumulator (vector)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlal_low_f16)"]
@@ -16362,6 +16514,7 @@ pub fn vfmlslq_high_f16(r: float32x4_t, a: float16x8_t, b: float16x8_t) -> float
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_lane_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16379,6 +16532,7 @@ pub fn vfmlsl_lane_high_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_laneq_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16396,6 +16550,7 @@ pub fn vfmlsl_laneq_high_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_lane_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16413,6 +16568,7 @@ pub fn vfmlslq_lane_high_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_laneq_high_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16428,8 +16584,81 @@ pub fn vfmlslq_laneq_high_f16<const LANE: i32>(
     unsafe { vfmlslq_high_f16(r, a, vdupq_n_f16(simd_extract!(b, LANE as u32))) }
 }
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_lane_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlsl_lane_high_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x4_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlsl_high_f16(r, a, vdup_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_laneq_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlsl_laneq_high_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x8_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlsl_high_f16(r, a, vdup_n_f16(simd_extract!(b, 7 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_lane_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlslq_lane_high_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x4_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlslq_high_f16(r, a, vdupq_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_laneq_high_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl2, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlslq_laneq_high_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x8_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlslq_high_f16(r, a, vdupq_n_f16(simd_extract!(b, 7 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_lane_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16447,6 +16676,7 @@ pub fn vfmlsl_lane_low_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_laneq_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16464,6 +16694,7 @@ pub fn vfmlsl_laneq_low_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_lane_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16481,6 +16712,7 @@ pub fn vfmlslq_lane_low_f16<const LANE: i32>(
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_laneq_low_f16)"]
 #[inline(always)]
+#[cfg(target_endian = "little")]
 #[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
 #[target_feature(enable = "neon,fp16")]
 #[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
@@ -16494,6 +16726,78 @@ pub fn vfmlslq_laneq_low_f16<const LANE: i32>(
 ) -> float32x4_t {
     static_assert_uimm_bits!(LANE, 3);
     unsafe { vfmlslq_low_f16(r, a, vdupq_n_f16(simd_extract!(b, LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_lane_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlsl_lane_low_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x4_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlsl_low_f16(r, a, vdup_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_laneq_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlsl_laneq_low_f16<const LANE: i32>(
+    r: float32x2_t,
+    a: float16x4_t,
+    b: float16x8_t,
+) -> float32x2_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlsl_low_f16(r, a, vdup_n_f16(simd_extract!(b, 7 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_lane_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlslq_lane_low_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x4_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 2);
+    unsafe { vfmlslq_low_f16(r, a, vdupq_n_f16(simd_extract!(b, 3 - LANE as u32))) }
+}
+#[doc = "Floating-point fused Multiply-Subtract Long from accumulator (by element)."]
+#[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlslq_laneq_low_f16)"]
+#[inline(always)]
+#[cfg(target_endian = "big")]
+#[cfg_attr(test, assert_instr(fmlsl, LANE = 0))]
+#[target_feature(enable = "neon,fp16")]
+#[cfg_attr(not(target_arch = "arm"), target_feature(enable = "fhm"))]
+#[rustc_legacy_const_generics(3)]
+#[stable(feature = "stdarch_neon_fp16", since = "1.94.0")]
+#[cfg(not(target_arch = "arm64ec"))]
+pub fn vfmlslq_laneq_low_f16<const LANE: i32>(
+    r: float32x4_t,
+    a: float16x8_t,
+    b: float16x8_t,
+) -> float32x4_t {
+    static_assert_uimm_bits!(LANE, 3);
+    unsafe { vfmlslq_low_f16(r, a, vdupq_n_f16(simd_extract!(b, 7 - LANE as u32))) }
 }
 #[doc = "Floating-point fused Multiply-Subtract Long from accumulator (vector)."]
 #[doc = "[Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vfmlsl_low_f16)"]

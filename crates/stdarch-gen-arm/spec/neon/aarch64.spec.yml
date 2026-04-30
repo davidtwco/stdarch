@@ -14132,6 +14132,7 @@ intrinsics:
     arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
     return_type: "{neon_type[0]}"
     attr:
+      - *little-endian
       - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlal2, 'LANE = 0']]}]]
       - *neon-fp16
       - *enable-fhm
@@ -14152,6 +14153,33 @@ intrinsics:
           - - r
             - a
             - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, 'LANE as u32']]}]]
+  
+  - name: "vfmlal{type[3]}{neon_type[1]}"
+    doc: "Floating-point fused Multiply-Add Long to accumulator (by element)."
+    arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
+    return_type: "{neon_type[0]}"
+    attr:
+      - *big-endian
+      - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlal2, 'LANE = 0']]}]]
+      - *neon-fp16
+      - *enable-fhm
+      - FnCall: [rustc_legacy_const_generics, ['3']]
+      - *neon-stable-fp16
+      - *target-not-arm64ec
+    static_defs: ['const LANE: i32']
+    safety: safe
+    types:
+      - [float32x2_t, float16x4_t, float16x4_t, '_lane_high_', '_high_', '2', '3']
+      - [float32x2_t, float16x4_t, float16x8_t, '_laneq_high_', '_high_', '3', '7']
+      - [float32x4_t, float16x8_t, float16x4_t, 'q_lane_high_', 'q_high_', '2', '3']
+      - [float32x4_t, float16x8_t, float16x8_t, 'q_laneq_high_', 'q_high_', '3', '7']
+    compose:
+      - FnCall: [static_assert_uimm_bits!, [LANE, "{type[5]}"]]
+      - FnCall:
+          - "vfmlal{type[4]}{neon_type[1]}"
+          - - r
+            - a
+            - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, "{type[6]} - LANE as u32"]]}]]
 
 
   - name: "vfmlal{type[2]}{neon_type[1]}"
@@ -14182,6 +14210,7 @@ intrinsics:
     arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
     return_type: "{neon_type[0]}"
     attr:
+      - *little-endian
       - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlal, 'LANE = 0']]}]]
       - *neon-fp16
       - *enable-fhm
@@ -14202,6 +14231,33 @@ intrinsics:
           - - r
             - a
             - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, 'LANE as u32']]}]]
+  
+  - name: "vfmlal{type[3]}{neon_type[1]}"
+    doc: "Floating-point fused Multiply-Add Long to accumulator (by element)."
+    arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
+    return_type: "{neon_type[0]}"
+    attr:
+      - *big-endian
+      - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlal, 'LANE = 0']]}]]
+      - *neon-fp16
+      - *enable-fhm
+      - FnCall: [rustc_legacy_const_generics, ['3']]
+      - *neon-stable-fp16
+      - *target-not-arm64ec
+    static_defs: ['const LANE: i32']
+    safety: safe
+    types:
+      - [float32x2_t, float16x4_t, float16x4_t, '_lane_low_', '_low_', '2', '3']
+      - [float32x2_t, float16x4_t, float16x8_t, '_laneq_low_', '_low_', '3', '7']
+      - [float32x4_t, float16x8_t, float16x4_t, 'q_lane_low_', 'q_low_', '2', '3']
+      - [float32x4_t, float16x8_t, float16x8_t, 'q_laneq_low_', 'q_low_', '3', '7']
+    compose:
+      - FnCall: [static_assert_uimm_bits!, [LANE, "{type[5]}"]]
+      - FnCall:
+          - "vfmlal{type[4]}{neon_type[1]}"
+          - - r
+            - a
+            - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, "{type[6]} - LANE as u32"]]}]]
 
 
   - name: "vfmlsl{type[2]}{neon_type[1]}"
@@ -14231,6 +14287,7 @@ intrinsics:
     arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
     return_type: "{neon_type[0]}"
     attr:
+      - *little-endian
       - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlsl2, 'LANE = 0']]}]]
       - *neon-fp16
       - *enable-fhm
@@ -14251,6 +14308,33 @@ intrinsics:
           - - r
             - a
             - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, 'LANE as u32']]}]]
+
+  - name: "vfmlsl{type[3]}{neon_type[1]}"
+    doc: "Floating-point fused Multiply-Subtract Long from accumulator (by element)."
+    arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
+    return_type: "{neon_type[0]}"
+    attr:
+      - *big-endian
+      - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlsl2, 'LANE = 0']]}]]
+      - *neon-fp16
+      - *enable-fhm
+      - FnCall: [rustc_legacy_const_generics, ['3']]
+      - *neon-stable-fp16
+      - *target-not-arm64ec
+    static_defs: ['const LANE: i32']
+    safety: safe
+    types:
+      - [float32x2_t, float16x4_t, float16x4_t, '_lane_high_', '_high_', '2', '3']
+      - [float32x2_t, float16x4_t, float16x8_t, '_laneq_high_', '_high_', '3', '7']
+      - [float32x4_t, float16x8_t, float16x4_t, 'q_lane_high_', 'q_high_', '2', '3']
+      - [float32x4_t, float16x8_t, float16x8_t, 'q_laneq_high_', 'q_high_', '3', '7']
+    compose:
+      - FnCall: [static_assert_uimm_bits!, [LANE, "{type[5]}"]]
+      - FnCall:
+          - "vfmlsl{type[4]}{neon_type[1]}"
+          - - r
+            - a
+            - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, "{type[6]} - LANE as u32"]]}]]
 
 
   - name: "vfmlsl{type[2]}{neon_type[1]}"
@@ -14280,6 +14364,7 @@ intrinsics:
     arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
     return_type: "{neon_type[0]}"
     attr:
+      - *little-endian
       - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlsl, 'LANE = 0']]}]]
       - *neon-fp16
       - *enable-fhm
@@ -14300,6 +14385,33 @@ intrinsics:
           - - r
             - a
             - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, 'LANE as u32']]}]]
+  
+  - name: "vfmlsl{type[3]}{neon_type[1]}"
+    doc: "Floating-point fused Multiply-Subtract Long from accumulator (by element)."
+    arguments: ["r: {neon_type[0]}", "a: {neon_type[1]}",  "b: {neon_type[2]}"]
+    return_type: "{neon_type[0]}"
+    attr:
+      - *big-endian
+      - FnCall: [cfg_attr, [test, {FnCall: [assert_instr, [fmlsl, 'LANE = 0']]}]]
+      - *neon-fp16
+      - *enable-fhm
+      - FnCall: [rustc_legacy_const_generics, ['3']]
+      - *neon-stable-fp16
+      - *target-not-arm64ec
+    static_defs: ['const LANE: i32']
+    safety: safe
+    types:
+      - [float32x2_t, float16x4_t, float16x4_t, '_lane_low_', '_low_', '2', '3']
+      - [float32x2_t, float16x4_t, float16x8_t, '_laneq_low_', '_low_', '3', '7']
+      - [float32x4_t, float16x8_t, float16x4_t, 'q_lane_low_', 'q_low_', '2', '3']
+      - [float32x4_t, float16x8_t, float16x8_t, 'q_laneq_low_', 'q_low_', '3', '7']
+    compose:
+      - FnCall: [static_assert_uimm_bits!, [LANE, "{type[5]}"]]
+      - FnCall:
+          - "vfmlsl{type[4]}{neon_type[1]}"
+          - - r
+            - a
+            - FnCall: ["vdup{neon_type[1].N}", [{FnCall: [simd_extract!, [b, "{type[6]} - LANE as u32"]]}]]
 
   - name: "vamax{neon_type.no}"
     doc: "Multi-vector floating-point absolute maximum"
