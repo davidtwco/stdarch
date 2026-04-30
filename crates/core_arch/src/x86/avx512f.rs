@@ -42649,7 +42649,7 @@ pub fn _mm_fixupimm_ss<const IMM8: i32>(a: __m128, b: __m128, c: __m128i) -> __m
         let c = c.as_i32x4();
         let r = vfixupimmss(a, b, c, IMM8, 0b11111111, _MM_FROUND_CUR_DIRECTION);
         let fixupimm: f32 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42675,7 +42675,7 @@ pub fn _mm_mask_fixupimm_ss<const IMM8: i32>(
         let c = c.as_i32x4();
         let fixupimm = vfixupimmss(a, b, c, IMM8, k, _MM_FROUND_CUR_DIRECTION);
         let fixupimm: f32 = simd_extract!(fixupimm, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42701,7 +42701,7 @@ pub fn _mm_maskz_fixupimm_ss<const IMM8: i32>(
         let c = c.as_i32x4();
         let fixupimm = vfixupimmssz(a, b, c, IMM8, k, _MM_FROUND_CUR_DIRECTION);
         let fixupimm: f32 = simd_extract!(fixupimm, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42722,7 +42722,7 @@ pub fn _mm_fixupimm_sd<const IMM8: i32>(a: __m128d, b: __m128d, c: __m128i) -> _
         let c = c.as_i64x2();
         let fixupimm = vfixupimmsd(a, b, c, IMM8, 0b11111111, _MM_FROUND_CUR_DIRECTION);
         let fixupimm: f64 = simd_extract!(fixupimm, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42748,7 +42748,7 @@ pub fn _mm_mask_fixupimm_sd<const IMM8: i32>(
         let c = c.as_i64x2();
         let fixupimm = vfixupimmsd(a, b, c, IMM8, k, _MM_FROUND_CUR_DIRECTION);
         let fixupimm: f64 = simd_extract!(fixupimm, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42774,7 +42774,7 @@ pub fn _mm_maskz_fixupimm_sd<const IMM8: i32>(
         let c = c.as_i64x2();
         let fixupimm = vfixupimmsdz(a, b, c, IMM8, k, _MM_FROUND_CUR_DIRECTION);
         let fixupimm: f64 = simd_extract!(fixupimm, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42801,7 +42801,7 @@ pub fn _mm_fixupimm_round_ss<const IMM8: i32, const SAE: i32>(
         let c = c.as_i32x4();
         let r = vfixupimmss(a, b, c, IMM8, 0b11111111, SAE);
         let fixupimm: f32 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42829,7 +42829,7 @@ pub fn _mm_mask_fixupimm_round_ss<const IMM8: i32, const SAE: i32>(
         let c = c.as_i32x4();
         let r = vfixupimmss(a, b, c, IMM8, k, SAE);
         let fixupimm: f32 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42857,7 +42857,7 @@ pub fn _mm_maskz_fixupimm_round_ss<const IMM8: i32, const SAE: i32>(
         let c = c.as_i32x4();
         let r = vfixupimmssz(a, b, c, IMM8, k, SAE);
         let fixupimm: f32 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42884,7 +42884,7 @@ pub fn _mm_fixupimm_round_sd<const IMM8: i32, const SAE: i32>(
         let c = c.as_i64x2();
         let r = vfixupimmsd(a, b, c, IMM8, 0b11111111, SAE);
         let fixupimm: f64 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42912,7 +42912,7 @@ pub fn _mm_mask_fixupimm_round_sd<const IMM8: i32, const SAE: i32>(
         let c = c.as_i64x2();
         let r = vfixupimmsd(a, b, c, IMM8, k, SAE);
         let fixupimm: f64 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -42940,7 +42940,7 @@ pub fn _mm_maskz_fixupimm_round_sd<const IMM8: i32, const SAE: i32>(
         let c = c.as_i64x2();
         let r = vfixupimmsdz(a, b, c, IMM8, k, SAE);
         let fixupimm: f64 = simd_extract!(r, 0);
-        let r = simd_insert!(a, 0, fixupimm);
+        let r = simd_insert!(b, 0, fixupimm);
         transmute(r)
     }
 }
@@ -61830,7 +61830,7 @@ mod tests {
         let b = _mm_set1_ps(f32::MAX);
         let c = _mm_set1_epi32(i32::MAX);
         let r = _mm_fixupimm_ss::<5>(a, b, c);
-        let e = _mm_set_ps(0., 0., 0., -0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, -0.0);
         assert_eq_m128(r, e);
     }
 
@@ -61840,7 +61840,7 @@ mod tests {
         let b = _mm_set1_ps(f32::MAX);
         let c = _mm_set1_epi32(i32::MAX);
         let r = _mm_mask_fixupimm_ss::<5>(a, 0b11111111, b, c);
-        let e = _mm_set_ps(0., 0., 0., -0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, -0.0);
         assert_eq_m128(r, e);
     }
 
@@ -61850,10 +61850,10 @@ mod tests {
         let b = _mm_set1_ps(f32::MAX);
         let c = _mm_set1_epi32(i32::MAX);
         let r = _mm_maskz_fixupimm_ss::<5>(0b00000000, a, b, c);
-        let e = _mm_set_ps(0., 0., 0., 0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, 0.0);
         assert_eq_m128(r, e);
         let r = _mm_maskz_fixupimm_ss::<5>(0b11111111, a, b, c);
-        let e = _mm_set_ps(0., 0., 0., -0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, -0.0);
         assert_eq_m128(r, e);
     }
 
@@ -61863,7 +61863,7 @@ mod tests {
         let b = _mm_set1_pd(f64::MAX);
         let c = _mm_set1_epi64x(i32::MAX as i64);
         let r = _mm_fixupimm_sd::<5>(a, b, c);
-        let e = _mm_set_pd(0., -0.0);
+        let e = _mm_set_pd(f64::MAX, -0.0);
         assert_eq_m128d(r, e);
     }
 
@@ -61873,7 +61873,7 @@ mod tests {
         let b = _mm_set1_pd(f64::MAX);
         let c = _mm_set1_epi64x(i32::MAX as i64);
         let r = _mm_mask_fixupimm_sd::<5>(a, 0b11111111, b, c);
-        let e = _mm_set_pd(0., -0.0);
+        let e = _mm_set_pd(f64::MAX, -0.0);
         assert_eq_m128d(r, e);
     }
 
@@ -61883,10 +61883,10 @@ mod tests {
         let b = _mm_set1_pd(f64::MAX);
         let c = _mm_set1_epi64x(i32::MAX as i64);
         let r = _mm_maskz_fixupimm_sd::<5>(0b00000000, a, b, c);
-        let e = _mm_set_pd(0., 0.0);
+        let e = _mm_set_pd(f64::MAX, 0.0);
         assert_eq_m128d(r, e);
         let r = _mm_maskz_fixupimm_sd::<5>(0b11111111, a, b, c);
-        let e = _mm_set_pd(0., -0.0);
+        let e = _mm_set_pd(f64::MAX, -0.0);
         assert_eq_m128d(r, e);
     }
 
@@ -61896,7 +61896,7 @@ mod tests {
         let b = _mm_set1_ps(f32::MAX);
         let c = _mm_set1_epi32(i32::MAX);
         let r = _mm_fixupimm_round_ss::<5, _MM_FROUND_CUR_DIRECTION>(a, b, c);
-        let e = _mm_set_ps(1., 0., 0., -0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, -0.0);
         assert_eq_m128(r, e);
     }
 
@@ -61906,7 +61906,7 @@ mod tests {
         let b = _mm_set1_ps(f32::MAX);
         let c = _mm_set1_epi32(i32::MAX);
         let r = _mm_mask_fixupimm_round_ss::<5, _MM_FROUND_CUR_DIRECTION>(a, 0b11111111, b, c);
-        let e = _mm_set_ps(0., 0., 0., -0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, -0.0);
         assert_eq_m128(r, e);
     }
 
@@ -61916,10 +61916,10 @@ mod tests {
         let b = _mm_set1_ps(f32::MAX);
         let c = _mm_set1_epi32(i32::MAX);
         let r = _mm_maskz_fixupimm_round_ss::<5, _MM_FROUND_CUR_DIRECTION>(0b00000000, a, b, c);
-        let e = _mm_set_ps(0., 0., 0., 0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, 0.0);
         assert_eq_m128(r, e);
         let r = _mm_maskz_fixupimm_round_ss::<5, _MM_FROUND_CUR_DIRECTION>(0b11111111, a, b, c);
-        let e = _mm_set_ps(0., 0., 0., -0.0);
+        let e = _mm_set_ps(f32::MAX, f32::MAX, f32::MAX, -0.0);
         assert_eq_m128(r, e);
     }
 
@@ -61929,7 +61929,7 @@ mod tests {
         let b = _mm_set1_pd(f64::MAX);
         let c = _mm_set1_epi64x(i32::MAX as i64);
         let r = _mm_fixupimm_round_sd::<5, _MM_FROUND_CUR_DIRECTION>(a, b, c);
-        let e = _mm_set_pd(0., -0.0);
+        let e = _mm_set_pd(f64::MAX, -0.0);
         assert_eq_m128d(r, e);
     }
 
@@ -61939,7 +61939,7 @@ mod tests {
         let b = _mm_set1_pd(f64::MAX);
         let c = _mm_set1_epi64x(i32::MAX as i64);
         let r = _mm_mask_fixupimm_round_sd::<5, _MM_FROUND_CUR_DIRECTION>(a, 0b11111111, b, c);
-        let e = _mm_set_pd(0., -0.0);
+        let e = _mm_set_pd(f64::MAX, -0.0);
         assert_eq_m128d(r, e);
     }
 
@@ -61949,10 +61949,10 @@ mod tests {
         let b = _mm_set1_pd(f64::MAX);
         let c = _mm_set1_epi64x(i32::MAX as i64);
         let r = _mm_maskz_fixupimm_round_sd::<5, _MM_FROUND_CUR_DIRECTION>(0b00000000, a, b, c);
-        let e = _mm_set_pd(0., 0.0);
+        let e = _mm_set_pd(f64::MAX, 0.0);
         assert_eq_m128d(r, e);
         let r = _mm_maskz_fixupimm_round_sd::<5, _MM_FROUND_CUR_DIRECTION>(0b11111111, a, b, c);
-        let e = _mm_set_pd(0., -0.0);
+        let e = _mm_set_pd(f64::MAX, -0.0);
         assert_eq_m128d(r, e);
     }
 
