@@ -12,7 +12,7 @@ echo "PROFILE=${PROFILE}"
 
 INTRINSIC_TEST="--manifest-path=crates/intrinsic-test/Cargo.toml"
 
-export CC="clang"
+export CC="/llvm/bin/clang"
 
 case ${TARGET} in
     aarch64_be*)
